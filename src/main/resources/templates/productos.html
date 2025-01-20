@@ -1,0 +1,55 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+<div>
+    <div class="flex flex-row py-4 items-center border-b-2">
+        <div class="text-center basis-1/2 text-4xl">
+            <h1>Productos</h1>
+        </div>
+        <form class="basis-1/2 flex justify-center" action="/productos/crear">
+            <button class="btn btn-blue float-right">Crear</button>
+        </form>
+        <form class="basis-1/2 flex justify-center" action="/index" >
+            <button class="btn btn-blue float-right">Volver</button>
+        </form>
+    </div>
+    <div class="grid grid-cols-5 items-center justify-center text-center border-b-2 my-2">
+        <div class="text-2xl">Código</div>
+        <div class="text-2xl">Nombre</div>
+        <div class="text-2xl">Precio</div>
+        <div class="text-2xl">Fabricante</div>
+        <div class="text-center text-2xl">Acción</div>
+    </div>
+    <div class="grid grid-cols-5 items-center justify-center text-center my-2" th:each="producto : ${listaProds}">
+
+        <div class="" th:text="${producto.codigo}">Código</div>
+        <div class="" th:text="${producto.nombre}">Nombre</div>
+        <div class="" th:text="${producto.precio}">Precio</div>
+        <div class="text-xl"
+
+                th:each="fabricante : ${listaFab}"
+                th:if="${fabricante.codigo == producto.id_fabricante}"
+                th:text="${fabricante.nombre}">Fabricante
+
+        </div>
+
+        <div class="grid grid-flow-col">
+            <form  th:action="@{/productos/__${producto.codigo}__}">
+                <button class="btn btn-green">Detalle</button>
+            </form>
+            <form th:action="@{/productos/editar/__${producto.codigo}__}" method="get">
+                <button class="btn btn-blue">Editar</button>
+            </form>
+            <form th:action="@{/productos/borrar/__${producto.codigo}__}" method="post">
+                <button class="btn btn-red">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
